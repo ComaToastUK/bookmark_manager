@@ -29,3 +29,21 @@ feature  'adding links to the bookmark manager' do
   end
  end
 end
+
+# As a time-pressed user
+# So that I can organise my many links into different categories for ease of search
+# I would like to tag links in my bookmark manager
+
+feature 'organise links via tags' do
+  scenario 'tagging bbc.co.uk with news tag' do
+
+    visit '/links/new'
+    fill_in 'url', with: 'http://www.bbc.com'
+    fill_in 'title', with: 'BBC Homepage'
+    fill_in 'tags', with: 'news'
+
+    click_button 'Create link'
+    link = Link.first
+    expect(link.tags.map(&:name)) .to include('news')
+  end
+end
