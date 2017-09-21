@@ -19,15 +19,15 @@
     <form action='/users' method="POST">
       <label for='email'>
         Email:
-        <input type='text' name='email'/>
+        <input type='text' type='email' name='email' required/>
       </label>
       <label for='password'>
         Password:
-        <input type='password' name='password' />
+        <input type='password' name='password' required/>
       </label>
       <label for='password_confirmation'>
         Confirm password:
-        <input type='password' name='password_confirmation' />
+        <input type='password' name='password_confirmation' required/>
       </label>
       <input type='submit' name='submit' value='Sign up' />
     </form>

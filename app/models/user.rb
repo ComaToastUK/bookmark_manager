@@ -12,7 +12,7 @@ class User
   include DataMapper::Resource
 
   property :id, Serial
-  property :email, String
+  property :email, String, required: true
   # this will store both the password and the salt
   # It's Text and not String because String holds
   # only 50 characters by default
@@ -25,6 +25,8 @@ class User
   # and password_confirmation are the same
   # read more about it in the documentation
   # http://datamapper.org/docs/validations.html
+
+  validates_presence_of :email, as: :email_address
   validates_confirmation_of :password
 
   # when assigned the password, we don't store it directly

@@ -115,6 +115,18 @@ feature 'Confirms passwords match' do
   end
 end
 
+feature 'user cannnot sign up without an email address' do
+  scenario 'user tries to sign up without an email address' do
+    expect { sign_up(email: ' ') }.not_to change(User, :count)
+  end
+end
+
+feature 'user cannot sign up without a VALID email address' do
+  scenario 'user tries to sign up with an invalid email address' do
+    expect { sign_up(email: 'james@examplemail') }.not_to change(User, :count)
+  end
+end
+
 def sign_up(email: 'james@example.com',
             password: 'password',
             password_confirmation: 'password')
