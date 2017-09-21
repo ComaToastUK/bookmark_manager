@@ -90,3 +90,21 @@ feature 'add tags to the links' do
   expect(link.tags.map(&:name)).to include 'news' and 'sports'
   end
 end
+
+feature 'User sign up' do
+  scenario 'I can sign up as a new user' do
+    sign_up
+    expect { sign_up }.to change(User, :count).by(1)
+    expect(page).to have_content('Welcome, james@example.com')
+    expect(User.first.email).to eq('james@example.com')
+  end
+end
+
+
+def sign_up
+  visit '/users/new'
+  expect(page.status_code).to eq(200)
+  fill_in :email,    with: 'james@example.com'
+  fill_in :password, with: 'password'
+  click_button 'Sign up'
+end

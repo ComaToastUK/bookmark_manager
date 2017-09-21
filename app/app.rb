@@ -1,16 +1,30 @@
 ENV["RACK_ENV"] ||= "development"
 require 'sinatra/base'
-require_relative 'models/link'
+require_relative './models/data_mapper_setup'
+require 'pry'
 
 class BookmarkManager < Sinatra::Base
+  enable :sessions
+  set :session_secret, 'super_secret'
 
   get '/' do
-      redirect '/links'
+    redirect '/users/new'
+  end
+
+  get '/users/new' do
+    erb (:'users/new')
+  end
+
+  post '/users' do
+    p params
+    # binding.pry
+    user = User.create(email: params[:email],
+                         password: params[:password])
+      session[:user_id] = user.id
+      redirect to('/links')
     end
 
   get '/links' do
-   # This uses DataMapper's .all method to fetch all
-   # data pertaining to this class from the database
    @links = Link.all
    erb (:'links/index')
   end
@@ -35,6 +49,12 @@ class BookmarkManager < Sinatra::Base
     erb :'links/index'
   end
 
-  run! if app_file == $PROGRAM_NAME
+  helpers do
+    def current_user
+    @current_user ||= User.get(session[:user_id])
+    # binding.pry
+    end
+  end
 
+  run! if app_file == $PROGRAM_NAME
 end

@@ -6,6 +6,8 @@ gem 'dm-migrations'
 gem 'sinatra'
 gem 'rake'
 gem 'pg'
+gem 'bcrypt'
+gem 'pry'
 
 group :test do
   gem 'capybara'
