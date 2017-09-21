@@ -12,7 +12,7 @@ class User
   include DataMapper::Resource
 
   property :id, Serial
-  property :email, String, required: true
+  property :email, String, format: :email_address, required: true
   # this will store both the password and the salt
   # It's Text and not String because String holds
   # only 50 characters by default
