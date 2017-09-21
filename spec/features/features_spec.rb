@@ -99,10 +99,37 @@ feature 'User sign up' do
   end
 end
 
-def sign_up
+feature 'Confirms passwords match' do
+  scenario 'james signs in with password' do
+    visit '/users/new'
+    expect(page.status_code).to eq(200)
+    fill_in :email,    with: 'james@example.com'
+    fill_in :password, with: 'password'
+    fill_in :password_confirmation, with: 'passwood'
+    expect { password_mismatch }.to change(User, :count).by(0)
+    # expect(page).to have_content 'Passwords do not match'
+  end
+  scenario 'another password confirmation test' do
+  expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
+  end
+end
+
+def sign_up(email: 'james@example.com',
+              password: 'password',
+              password_confirmation: 'password')
+  visit '/users/new'
+  expect(page.status_code).to eq(200)
+  fill_in :email,    with: email
+  fill_in :password, with: password
+  fill_in :password_confirmation, with: password_confirmation
+  click_button 'Sign up'
+end
+
+def password_mismatch
   visit '/users/new'
   expect(page.status_code).to eq(200)
   fill_in :email,    with: 'james@example.com'
   fill_in :password, with: 'password'
+  fill_in :password_confirmation, with: 'passwood'
   click_button 'Sign up'
 end
