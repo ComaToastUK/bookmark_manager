@@ -2,7 +2,6 @@ require 'data_mapper'
 require 'dm-postgres-adapter'
 
 class Link
-
   include DataMapper::Resource
 
   has n, :tags, through: Resource
@@ -10,5 +9,4 @@ class Link
   property :id,     Serial
   property :title,  String
   property :url,    String
-
 end

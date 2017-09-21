@@ -12,22 +12,22 @@ feature 'List of links' do
 end
 
 # As a time-pressed user
-#So that I can save a website
+# So that I can save a website
 # I would like to add the site's address and title to my bookmark manager
 
-feature  'adding links to the bookmark manager' do
+feature 'adding links to the bookmark manager' do
   scenario 'adding www.bbc.co.uk/news to the bookmark manager' do
-  visit '/links/new'
-   fill_in 'url',   with: 'http://www.bbc.com/'
-   fill_in 'title', with: 'BBC Homepage'
-   click_button 'Create link'
+    visit '/links/new'
+    fill_in 'url',   with: 'http://www.bbc.com/'
+    fill_in 'title', with: 'BBC Homepage'
+    click_button 'Create link'
 
-   expect(current_path).to eq '/links'
+    expect(current_path).to eq '/links'
 
-   within 'ul#links' do
-   expect(page).to have_content('BBC Homepage')
+    within 'ul#links' do
+      expect(page).to have_content('BBC Homepage')
+    end
   end
- end
 end
 
 # As a time-pressed user
@@ -36,7 +36,6 @@ end
 
 feature 'organise links via tags' do
   scenario 'tagging bbc.co.uk with news tag' do
-
     visit '/links/new'
     fill_in 'url', with: 'http://www.bbc.com'
     fill_in 'title', with: 'BBC Homepage'
@@ -81,13 +80,13 @@ end
 # I would like to add tags to the links in my bookmark manager
 feature 'add tags to the links' do
   scenario 'adding the news tag to BBC' do
-  visit '/links/new'
-  fill_in 'url', with: 'http://www.bbc.com'
-  fill_in 'title', with: 'BBC Homepage'
-  fill_in 'tags', with: 'news sports'
-  click_button 'Create link'
-  link = Link.first
-  expect(link.tags.map(&:name)).to include 'news' and 'sports'
+    visit '/links/new'
+    fill_in 'url', with: 'http://www.bbc.com'
+    fill_in 'title', with: 'BBC Homepage'
+    fill_in 'tags', with: 'news sports'
+    click_button 'Create link'
+    link = Link.first
+    expect(link.tags.map(&:name)).to(include 'news') && 'sports'
   end
 end
 
@@ -99,7 +98,6 @@ feature 'User sign up' do
     expect(User.first.email).to eq('james@example.com')
   end
 end
-
 
 def sign_up
   visit '/users/new'

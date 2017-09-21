@@ -1,19 +1,19 @@
 source 'https://rubygems.org'
 
-gem 'data_mapper'
-gem 'dm-postgres-adapter'
-gem 'dm-migrations'
-gem 'sinatra'
-gem 'rake'
-gem 'pg'
 gem 'bcrypt'
+gem 'data_mapper'
+gem 'dm-migrations'
+gem 'dm-postgres-adapter'
+gem 'pg'
 gem 'pry'
+gem 'rake'
+gem 'sinatra'
 
 group :test do
   gem 'capybara'
+  gem 'database_cleaner'
   gem 'rspec'
   gem 'rubocop'
-  gem 'database_cleaner'
   gem 'simplecov', require: false
   gem 'simplecov-console', require: false
 end
