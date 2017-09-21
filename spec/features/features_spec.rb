@@ -107,16 +107,17 @@ feature 'Confirms passwords match' do
     fill_in :password, with: 'password'
     fill_in :password_confirmation, with: 'passwood'
     expect { password_mismatch }.to change(User, :count).by(0)
-    # expect(page).to have_content 'Passwords do not match'
+    expect(current_path).to eq '/users'
+    expect(page).to have_content 'Passwords do not match'
   end
   scenario 'another password confirmation test' do
-  expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
+    expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
   end
 end
 
 def sign_up(email: 'james@example.com',
-              password: 'password',
-              password_confirmation: 'password')
+            password: 'password',
+            password_confirmation: 'password')
   visit '/users/new'
   expect(page.status_code).to eq(200)
   fill_in :email,    with: email

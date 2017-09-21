@@ -19,12 +19,12 @@ class User
   # and it's not enough for the hash and salt
   property :password_digest, Text
 
-# validates_confirmation_of is a DataMapper method
-# provided especially for validating confirmation passwords!
-# The model will not save unless both password
-# and password_confirmation are the same
-# read more about it in the documentation
-# http://datamapper.org/docs/validations.html
+  # validates_confirmation_of is a DataMapper method
+  # provided especially for validating confirmation passwords!
+  # The model will not save unless both password
+  # and password_confirmation are the same
+  # read more about it in the documentation
+  # http://datamapper.org/docs/validations.html
   validates_confirmation_of :password
 
   # when assigned the password, we don't store it directly
@@ -37,5 +37,4 @@ class User
     @password = password
     self.password_digest = BCrypt::Password.create(password)
   end
-
 end
