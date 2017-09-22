@@ -23,6 +23,9 @@
       <input type='hidden' name='_method' value='delete'>
       <input type='submit' value='Log out'>
     </form>
+    <form method='get' action='/links/new'>
+      <input type='submit' value='Add link'>
+    </form>
     <% end %>
 
     <% if flash[:notice] %>
