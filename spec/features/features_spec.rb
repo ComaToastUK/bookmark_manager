@@ -137,6 +137,25 @@ feature 'user cannot sign up with the same email address twice' do
   end
 end
 
+feature 'User can sign in' do
+
+  let!(:user) do
+  User.create(email: 'james@example.com',
+              password: 'password',
+              password_confirmation: 'password')
+            end
+  scenario 'user signs in with correct credentials' do
+    sign_in(email: user.email,   password: user.password)
+    expect(page).to have_content "Welcome, #{user.email}"
+  end
+  def sign_in(email:, password:)
+    visit '/sessions/new'
+    fill_in :email, with: email
+    fill_in :password, with: password
+    click_button 'Sign in'
+  end
+end
+
 def sign_up(email: 'james@example.com',
             password: 'password',
             password_confirmation: 'password')
