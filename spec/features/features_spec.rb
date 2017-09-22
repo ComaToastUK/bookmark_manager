@@ -92,7 +92,6 @@ end
 
 feature 'User sign up' do
   scenario 'I can sign up as a new user' do
-    sign_up
     expect { sign_up }.to change(User, :count).by(1)
     expect(page).to have_content('Welcome, james@example.com')
     expect(User.first.email).to eq('james@example.com')
@@ -108,10 +107,12 @@ feature 'Confirms passwords match' do
     fill_in :password_confirmation, with: 'passwood'
     expect { password_mismatch }.to change(User, :count).by(0)
     expect(current_path).to eq '/users'
-    expect(page).to have_content 'Passwords do not match'
+    expect(page).to have_content 'Password does not match the confirmation'
   end
   scenario 'another password confirmation test' do
     expect { sign_up(password_confirmation: 'wrong') }.not_to change(User, :count)
+    expect(current_path).to eq '/users'
+    expect(page).to have_content 'Password does not match the confirmation'
   end
 end
 
@@ -124,6 +125,15 @@ end
 feature 'user cannot sign up without a VALID email address' do
   scenario 'user tries to sign up with an invalid email address' do
     expect { sign_up(email: 'james@examplemail') }.not_to change(User, :count)
+  end
+end
+
+feature 'user cannot sign up with the same email address twice' do
+  scenario 'user james tries to sign up twice with the same address' do
+    sign_up
+    visit '/'
+    expect { sign_up }.to_not change(User, :count)
+    expect(page).to have_content('Email is already taken')
   end
 end
 
