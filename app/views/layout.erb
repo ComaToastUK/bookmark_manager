@@ -16,9 +16,21 @@
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=font1|font2|etc" type="text/css">
   </head>
   <body>
+
     <% if current_user %>
       Welcome, <%= current_user.email %>
+      <form method='post' action='/sessions'>
+      <input type='hidden' name='_method' value='delete'>
+      <input type='submit' value='Log out'>
+    </form>
     <% end %>
+
+    <% if flash[:notice] %>
+      <div id='notice'>
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
     <% if flash[:errors] && !flash[:errors].empty? %>
       </br>
       Please refer to the following errors below:

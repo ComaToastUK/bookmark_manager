@@ -148,13 +148,21 @@ feature 'User can sign in' do
     sign_in(email: user.email,   password: user.password)
     expect(page).to have_content "Welcome, #{user.email}"
   end
-  def sign_in(email:, password:)
-    visit '/sessions/new'
-    fill_in :email, with: email
-    fill_in :password, with: password
-    click_button 'Sign in'
-  end
 end
+
+feature 'User can log out' do
+  let!(:user) do
+  User.create(email: 'james@example.com',
+              password: 'password',
+              password_confirmation: 'password')
+            end
+  scenario 'allows a signed in use to log out' do
+    sign_in(email: user.email,   password: user.password)
+    click_button 'Log out'
+    expect(page).to have_content 'You have been logged out'
+    expect(page).not_to have_content('Welcome, james@example.com')
+    end
+  end
 
 def sign_up(email: 'james@example.com',
             password: 'password',
@@ -165,6 +173,13 @@ def sign_up(email: 'james@example.com',
   fill_in :password, with: password
   fill_in :password_confirmation, with: password_confirmation
   click_button 'Sign up'
+end
+
+def sign_in(email:, password:)
+  visit '/sessions/new'
+  fill_in :email, with: email
+  fill_in :password, with: password
+  click_button 'Sign in'
 end
 
 def password_mismatch
